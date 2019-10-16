@@ -340,11 +340,7 @@ def get_most_relevant_paragraphs(q, matrix, num):
 
 # retrieving the most relevant paragraphs according to the TF-IDF based similarity matrix
 tfidf_relevant = get_most_relevant_paragraphs(tfidf_vector, tfidf_similarity_matrix, 3)
-itfidf_relevant_test = get_most_relevant_paragraphs(tfidf_vector_test, tfidf_similarity_matrix, 3)
-
-
-# print_relevant_paragraphs(tfidf_relevant_test, 5)
-# print_relevant_paragraphs(tfidf_relevant, 5)
+tfidf_relevant_test = get_most_relevant_paragraphs(tfidf_vector_test, tfidf_similarity_matrix, 3)
 
 
 # 4.4 giving our TF-IDF values new weights according to our LSI model
@@ -365,7 +361,7 @@ lsi_relevant = get_most_relevant_topics(lsi_vector, 3)
 lsi_relevant_test = get_most_relevant_topics(lsi_vector_test, 3)
 
 lsi_relevant_paragraphs = get_most_relevant_paragraphs(lsi_vector, lsi_similarity_matrix, 3)
-
+lsi_relevant_paragraphs_test = get_most_relevant_paragraphs(lsi_vector_test, lsi_similarity_matrix, 3)
 
 ##############
 ## PRINTING ##
@@ -434,75 +430,32 @@ report_weights(tfidf_vector)
 print('\n\n4.3] - the 3 best matching (TF-IDF) paragraphs in our corpus from the query: "%s"' % query)
 print_relevant_paragraphs(tfidf_relevant, 5)
 
-print("\n\n4.3] - the 3 best matching (LSI) paragraphs in our corpus from the query: %s" % query)
+print("\n\n4.4] - the 3 best matching (LSI) paragraphs in our corpus from the query: %s" % query)
 print("Topic form:")
 print_relevant_topics(lsi_relevant)
-print("\n\n4.3] - top paragraphs given our LSI vector and our LSI corpus:")
+print("\n\n4.4] - top paragraphs given our LSI vector and our LSI corpus:")
 print_relevant_paragraphs(lsi_relevant_paragraphs, 5)
 
 
+##############################
+## PRINTING FOR TEST VALUES ##
+##############################
 
+print('\n\n\n4.2] Example - checking with example query "How taxes influence Economics?"')
+print("Example - our given query transformed to BOW-form with TD-IDF weighting:\t\t" + str(tfidf_vector_test))
+print("4.2] Example - alternative representation:")
+report_weights(tfidf_vector_test)
 
+print('\n\n4.3] Example - - the 3 best matching (TF-IDF) ' +
+      'paragraphs in our corpus from the query: "How taxes influence Economics?"')
+print_relevant_paragraphs(tfidf_relevant_test, 5)
 
+print("4.3] Example, Topic form:")
+print_relevant_topics(lsi_relevant_test)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-# 4.4
-
-
-# TESTKODE FOR Å SJEKKE AT DET FUNGERER LIKT SOM I OPPGAVEN
-# test_query = "How taxes influence Economics?"
-# test_query = preprocessing(test_query)
-# test_query = dictionary.doc2bow(test_query)
-# test_tfidf = tfidf_model[test_query]
-# test_lsi = lsi[test_tfidf]
-# sorted_test = (sorted(test_lsi, key=lambda kv: -abs(kv[1]))[:3] ) #[(3, 0.1236889420871775), (5, 0.08609030455385876), (9, 0.08523104132289301)]
-# all_test_topics = (lsi.show_topics())
-# for i in sorted_test:
-#     print("[Topic ", i[0], "]")
-#     print(all_test_topics[i[0]][1])
-#printer følgende til konsoll, bekrefter at testquery gir samme output som i oppgavebeskrivelsen:
-# [Topic  3 ]
-# -0.467*"tax" + -0.201*"rent" + 0.193*"trade" + 0.166*"capit" + 0.154*"foreign" + 0.154*"employ" + -0.151*"upon" + 0.137*"quantiti" + 0.137*"labour" + 0.134*"manufactur"
-# [Topic  5 ]
-# 0.383*"tax" + 0.217*"capit" + 0.162*"foreign" + 0.137*"duti" + 0.133*"trade" + 0.130*"consumpt" + 0.127*"upon" + 0.126*"export" + 0.120*"profit" + 0.118*"home"
-# [Topic  9 ]
-# 0.314*"tax" + -0.258*"bank" + 0.206*"coloni" + -0.182*"land" + 0.181*"labour" + -0.156*"corn" + 0.154*"wage" + -0.149*"manufactur" + -0.145*"rent" + -0.140*"export"
-# TESTKODE SLUTT
-
-
-
-
-lsi_query = lsi[query_tfidf]
-sorted_lsi = (sorted(lsi_query, key=lambda kv: -abs(kv[1]))[:3] )
-all_topics = lsi.show_topics()
-for i in sorted_lsi:
-    print("[Topic ", i[0], "]")
-    print((all_topics[i[0]][1]))
-
-# Får følgende resultat skrevet til konsoll:
-# [Topic  4 ]
-# -0.262*"bank" + 0.251*"price" + -0.233*"capit" + -0.232*"circul" + -0.188*"gold" + -0.184*"money" + 0.181*"corn" + 0.141*"import" + -0.140*"coin" + -0.140*"revenu"
-# [Topic  20 ]
-# -0.305*"expens" + -0.215*"work" + 0.192*"interest" + -0.182*"bounti" + -0.167*"bank" + 0.156*"money" + -0.152*"coin" + 0.125*"stock" + -0.124*"mine" + 0.124*"revenu"
-# [Topic  16 ]
-# 0.309*"circul" + -0.219*"increas" + -0.199*"cent" + -0.194*"per" + -0.192*"coin" + 0.157*"mine" + 0.146*"money" + 0.145*"coloni" + -0.142*"industri" + 0.141*"materi"
-"""
+print('\n\n4.4] Example - the 3 best matching (LSI) ' +
+      'paragraphs in our corpus from the query:"How taxes influence Economics?"')
+print("Topic form:")
+print_relevant_topics(lsi_relevant_test)
+print("\n\n4.4] Example - top paragraphs given our LSI vector and our LSI corpus:")
+print_relevant_paragraphs(lsi_relevant_paragraphs_test, 5)
